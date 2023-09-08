@@ -14,13 +14,18 @@ import { AcmeLogo } from "./AcmeLogo.jsx";
 export default function Nav() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const location = useLocation(); // Get the current location (route)
+  const isAdmin = localStorage.getItem('isAdmin') === 'true'; // Check if the user is an admin
 
   const menuItems = [
     { name: "Home", path: "/" },
     { name: "View Loan", path: "/view-loans" },
-    { name: "Projects", path: "/projects" },
-    { name: "Contact Me", path: "/contact_me" },
+    // Conditionally add the "Admin" menu item if the user is an admin
+    ...(isAdmin ? [{ name: "Admin", path: "/admin" }] : []),
+    { name: "Log out", path: "/logout" },
   ];
+
+  // Define paths where menu items should be hidden
+  const hiddenPaths = ['/login', '/signup'];
 
   return (
     <Navbar
@@ -41,22 +46,24 @@ export default function Nav() {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="end">
-        <NavbarBrand>
-          <AcmeLogo />
-          <p className="font-bold text-inherit">ACME</p>
-        </NavbarBrand>
-        {menuItems.map((item, index) => (
-          <NavbarItem
-            key={index}
-            className={location.pathname === item.path ? "text-primary" : ""}
-          >
-            <Link color="foreground" to={item.path}>
-              {item.name}
-            </Link>
-          </NavbarItem>
-        ))}
-      </NavbarContent>
+      {!hiddenPaths.includes(location.pathname) && (
+        <NavbarContent className="hidden sm:flex gap-4" justify="end">
+          <NavbarBrand>
+            <AcmeLogo />
+            <p className="font-bold text-inherit">ACME</p>
+          </NavbarBrand>
+          {menuItems.map((item, index) => (
+            <NavbarItem
+              key={index}
+              className={location.pathname === item.path ? "text-primary" : ""}
+            >
+              <Link color="foreground" to={item.path}>
+                {item.name}
+              </Link>
+            </NavbarItem>
+          ))}
+        </NavbarContent>
+      )}
 
       <NavbarMenu>
         {menuItems.map((item, index) => (

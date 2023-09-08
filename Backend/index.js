@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const signupRoute = require('./Routes/SignUp');
 const loginRoute = require('./Routes/Login');
 const loanRoutes = require('./Routes/loan');
+const adminLoginRoute = require('./Routes/Admin');
 dotenv.config();
 const app = express();
 
@@ -31,6 +32,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use('/api', signupRoute); // Register a new user
 app.use('/api', loginRoute);  // Login
 app.use('/api/loan', loanRoutes);
+app.use('/api/admin', adminLoginRoute);
 const port = process.env.PORT || 3000;
 app.get('/', (req, res) => {
   res.send('Hello, World!');

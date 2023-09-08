@@ -1,5 +1,6 @@
 // api.js
 import axios from 'axios';
+import { toast } from 'react-toastify'; // Import toast from react-toastify
 
 const BASE_URL = 'https://3000-narendra002-loanassignm-xvn12h9tipd.ws-us104.gitpod.io'; // Replace with your actual API URL
 
@@ -17,13 +18,15 @@ export const login = async (email, password) => {
 };
 
 // Function to make a signup request
-export const signup = async (email, username, password) => {
+export const signup = async (email, username, password,isAdmin) => {
   try {
     const response = await axios.post(`${BASE_URL}/api/signup`, {
       email,
       username,
       password,
+      isAdmin
     });
+    toast.success('User created successfully');
     return response.data; // Assuming your server returns a success message or user data
   } catch (error) {
     throw error;
@@ -35,6 +38,7 @@ export const signup = async (email, username, password) => {
 export const createLoan = async (loanData) => {
   try {
     const response = await axios.post(`${BASE_URL}/api/loan/create`, loanData);
+    toast.success('Loan created successfully');
     return response.data; // Assuming your server returns a success message or loan data
   } catch (error) {
     throw error;
@@ -42,10 +46,23 @@ export const createLoan = async (loanData) => {
 };
 
 // Function to fetch loans belonging to a customer
-export const fetchCustomerLoans = async () => {
+export const fetchCustomerLoans = async (userId) => {
   try {
-    const response = await axios.get(`${BASE_URL}/api/loan/customer-loans`);
-    return response.data; // Assuming your server returns a list of loans
+    const response = await axios.get(`${BASE_URL}/api/loan/customer-loans?userId=${userId}`);
+    const loans = response.data;
+    // console.log(loans);
+    return loans; // Assuming your server returns a list of loans
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchAllCustomerLoans = async (userId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/loan/customer-loans?userId=${userId}`);
+    const loans = response.data;
+    // console.log(loans);
+    return loans; // Assuming your server returns a list of loans
   } catch (error) {
     throw error;
   }

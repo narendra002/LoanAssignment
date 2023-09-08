@@ -1,4 +1,3 @@
-// SignUp.js
 import React, { useState } from "react";
 import { Input, Button } from "@nextui-org/react";
 import { Link } from "react-router-dom";
@@ -6,15 +5,17 @@ import { signup } from "./AxiosApiCaller"; // Import the signup function
 
 export default function SignUp() {
   const [user, setUser] = useState({
-    email: '',
-    username: '',
-    password: '',
+    email: "",
+    username: "",
+    password: "",
   });
 
+  const [isAdmin, setIsAdmin] = useState(false); // State to track admin status
+
   const [errors, setErrors] = useState({
-    email: '',
-    username: '',
-    password: '',
+    email: "",
+    username: "",
+    password: "",
   });
 
   const handleInputChange = (e) => {
@@ -33,15 +34,15 @@ export default function SignUp() {
     const newErrors = {};
 
     if (!user.email) {
-      newErrors.email = 'Email is required';
+      newErrors.email = "Email is required";
     }
 
     if (!user.username) {
-      newErrors.username = 'Username is required';
+      newErrors.username = "Username is required";
     }
 
     if (!user.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = "Password is required";
     }
 
     setErrors(newErrors);
@@ -49,8 +50,8 @@ export default function SignUp() {
     // If there are no errors, you can submit the form or perform other actions
     if (Object.keys(newErrors).length === 0) {
       try {
-        // Make the signup request
-        const response = await signup(user.email, user.username, user.password);
+        // Make the signup request with isAdmin status
+        const response = await signup(user.email, user.username, user.password, isAdmin);
         console.log("Signup Response:", response);
         // Handle the response (e.g., show a success message or redirect to login page)
       } catch (error) {
@@ -90,11 +91,32 @@ export default function SignUp() {
           onChange={handleInputChange}
           error={errors.password}
         />
-        <Button type="submit" fullWidth>Sign Up</Button>
+
+        {/* Checkbox for Admin registration */}
+        <div className="flex items-center">
+          <input
+            type="checkbox"
+            id="isAdmin"
+            name="isAdmin"
+            checked={isAdmin}
+            onChange={() => setIsAdmin(!isAdmin)}
+            className="mr-2"
+          />
+          <label htmlFor="isAdmin" className="text-gray-600">
+            Register as Admin
+          </label>
+        </div>
+
+        <Button type="submit" fullWidth>
+          Sign Up
+        </Button>
 
         {/* Link to the login page */}
         <p className="text-center text-gray-500 mt-4">
-          Already have an account? <Link to="/login" className="text-blue-500">Log in</Link>
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-500">
+            Log in
+          </Link>
         </p>
       </form>
     </div>
