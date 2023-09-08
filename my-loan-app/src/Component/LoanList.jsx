@@ -9,7 +9,7 @@ const LoanList = () => {
 
   const fetchLoans = async () => {
     try {
-      const response = await axios.get(`https://3000-narendra002-loanassignm-xvn12h9tipd.ws-us104.gitpod.io/api/loan/customer-loans?userId=${userId}`);
+      const response = await axios.get(`https://loan-assignment.vercel.app/api/loan/customer-loans?userId=${userId}`);
 
       if (response.status === 200) {
         setLoans(response.data.loans);

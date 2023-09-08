@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify'; // Import toast from react-toastify
 
-const BASE_URL = 'https://3000-narendra002-loanassignm-xvn12h9tipd.ws-us104.gitpod.io'; // Replace with your actual API URL
+const BASE_URL = 'https://loan-assignment.vercel.app'; // Replace with your actual API URL
 
 // Function to make a login request
 export const login = async (email, password) => {

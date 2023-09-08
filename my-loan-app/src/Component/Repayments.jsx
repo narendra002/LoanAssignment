@@ -25,7 +25,7 @@ const RepaymentForm = ({ loanId, scheduledRepayments }) => {
       const updatedRepayments = [...scheduledRepayments, repayment];
 
       try {
-        const response = await axios.put(`https://3000-narendra002-loanassignm-xvn12h9tipd.ws-us104.gitpod.io/api/loan/update-status/${loanId}`, { repaymentAmount: amount });
+        const response = await axios.put(`https://loan-assignment.vercel.app/api/loan/update-status/${loanId}`, { repaymentAmount: amount });
 
         if (response.status === 200) {
          toast.success('Repayment submitted successfully');

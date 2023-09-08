@@ -10,7 +10,7 @@ const AdminLoanList = () => {
     const fetchAdminLoans = async () => {
       try {
         // Make an API request to fetch admin loans
-        const response = await axios.get(`https://3000-narendra002-loanassignm-xvn12h9tipd.ws-us104.gitpod.io/api/admin/loans?userId=${localStorage.getItem('userId')}`);
+        const response = await axios.get(`https://loan-assignment.vercel.app/api/admin/loans?userId=${localStorage.getItem('userId')}`);
 
         if (response.status === 200) {
           setLoans(response.data.loans);
@@ -26,7 +26,7 @@ const AdminLoanList = () => {
   const handleLoanApproval = async (loanId) => {
     try {
       // Make an API request to update the loan state to 'approved'
-      const response = await axios.put(`https://3000-narendra002-loanassignm-xvn12h9tipd.ws-us104.gitpod.io/api/admin/loans/change/${loanId}`, { userId: localStorage.getItem('userId'), newState: 'APPROVED' });
+      const response = await axios.put(`https://loan-assignment.vercel.app/api/admin/loans/change/${loanId}`, { userId: localStorage.getItem('userId'), newState: 'APPROVED' });
 
       if (response.status === 200) {
         // Loan approval successful, update the state
